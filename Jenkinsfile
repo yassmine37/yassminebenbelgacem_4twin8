@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JAVA_HOME'   
-        maven 'M2_HOME'   
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
+    }  
 
     stages {
         stage('Git Checkout') {
@@ -21,10 +22,10 @@ pipeline {
 
     post {
         success {
-            echo 'Build Maven réussi '
+            echo 'Build Maven réussi ✅'
         }
         failure {
-            echo 'Le build Maven a échoué '
+            echo 'Le build Maven a échoué ❌'
         }
     }
 }
