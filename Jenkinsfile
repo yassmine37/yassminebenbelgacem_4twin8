@@ -34,16 +34,18 @@ pipeline {
         }
 
         stage('Push Docker Image') {
-            steps {
-                // Login Docker et push sécurisé via les credentials Jenkins
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_HUB_CREDENTIALS) {
-                        sh "docker push ${DOCKER_HUB_REPO}:${IMAGE_TAG}"
-                    }
-                }
-            }
+    steps {
+        withCredentials([usernamePassword(credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh """
+                echo $PASSWORD | docker login -u $USERNAME --password-stdin
+                docker push ${DOCKER_HUB_REPO}:${IMAGE_TAG}
+                docker logout
+            """
         }
     }
+}
+        }
+    
 
     post {
         success {
