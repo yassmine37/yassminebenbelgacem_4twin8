@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/votreuser/student-management.git'
+                git branch: 'main', url:  url: 'https://github.com/yassmine37/yassminebenbelgacem_4twin8.git'
             }
         }
 
