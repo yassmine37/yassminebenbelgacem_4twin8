@@ -2,15 +2,17 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'docker-hub-creds' // ID des credentials Jenkins
-        DOCKER_HUB_REPO = 'votrenomdocker/student-management' // ton repo Docker Hub
-        IMAGE_TAG = "latest"
+        DOCKER_HUB_CREDENTIALS = 'docker-hub-creds'
+        DOCKER_HUB_REPO = 'votrenomdocker/student-management'
+        IMAGE_TAG = 'latest'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url:  url: 'https://github.com/yassmine37/yassminebenbelgacem_4twin8.git'
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/yassmine37/yassminebenbelgacem_4twin8.git'
             }
         }
 
