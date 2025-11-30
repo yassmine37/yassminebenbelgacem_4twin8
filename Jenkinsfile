@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = docker-hub-creds
         DOCKER_HUB_REPO = 'yassmine37/student-management'
         IMAGE_TAG = 'latest'
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Test Docker') {      // <-- Nouvelle étape
+        stage('Test Docker') {
             steps {
                 sh 'docker --version && docker ps'
             }
@@ -36,7 +36,11 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(
+                    credentialsId: 'docker-hub-creds',   
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD'
+                )]) {
                     sh """
                         echo $PASSWORD | docker login -u $USERNAME --password-stdin
                         docker push ${DOCKER_HUB_REPO}:${IMAGE_TAG}
