@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds')
+        DOCKERHUB_CREDENTIALS = docker-hub-creds
         DOCKER_HUB_REPO = 'yassmine37/student-management'
         IMAGE_TAG = 'latest'
     }
